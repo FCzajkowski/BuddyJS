@@ -41,8 +41,6 @@ const Counter = () => h('div', {},
 );
 ```
 
----
-
 ## API Reference
 
 ### Routing
@@ -72,16 +70,12 @@ const Counter = () => h('div', {},
 ### CSS/SCSS Import
 - Use `importStyle('style.css')` in JS to load from `public/`
 
----
-
 ## Config
 Edit `src/config.js` for API URLs and environment flags:
 ```js
 export const API_URL = 'https://api.example.com';
 export const ENV = 'production';
 ```
-
----
 
 ## Testing
 - Add tests in the `tests/` folder
@@ -91,12 +85,8 @@ import { createRouter } from '../src/router.js';
 // ...
 ```
 
----
-
 ## Security
 - Node.js server sets basic security headers (CSP, X-Frame-Options, etc.)
-
----
 
 ## Project Structure
 ```
@@ -113,8 +103,6 @@ src/
 	http.js
 	config.js
 ```
-
----
 
 ## License
 Creative Commons
