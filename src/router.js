@@ -1,10 +1,13 @@
+
 export function createRouter(routes, state) {
-  const navigate = (path) => {
-    state.path = path;
-    history.pushState(null, '', path);
+  const setPath = () => {
+    const hash = window.location.hash.replace(/^#/, '') || '/';
+    state.path = routes[hash] ? hash : '/404';
   };
-  window.addEventListener('popstate', () => {
-    state.path = location.pathname;
-  });
+  const navigate = (path) => {
+    window.location.hash = path;
+  };
+  window.addEventListener('hashchange', setPath);
+  setPath();
   return { navigate };
 }

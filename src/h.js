@@ -11,6 +11,7 @@ export function h(tag, props = {}, ...children) {
     }
   }
   for (const child of children) {
+    if (child === false || child === null || child === undefined) continue;
     if (typeof child === 'string') {
       el.appendChild(document.createTextNode(child));
     } else {
