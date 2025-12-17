@@ -117,4 +117,4 @@ src/
 ---
 
 ## License
-MIT
+Creative Commons
