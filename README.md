@@ -1,21 +1,11 @@
-# BuddyJS
+<div align="center">
+  <h1>BuddyJS</h1>
+  <code style="padding:10px;">git clone https://github.com/FCzajkowski/BuddyJS</code>
+  <br>
+  <br>
+  
+</div>
 
-> A lightweight, reactive, hash-based JavaScript SPA micro-framework.
-
----
-
-## Features
-- ⚡ Minimal, fast, and dependency-free
-- 🔗 Hash-based routing for static hosting
-- 🔄 Reactive state management
-- 🌐 Lightweight HTTP client (fetch wrapper)
-- 🎨 CSS/SCSS import support
-- 🚦 404 fallback
-- 🛠️ Simple config
-- 🛡️ Security headers (Node.js server)
-- 🧪 Unit testable
-
----
 
 ## Quick Start
 1. Clone or download this repo
