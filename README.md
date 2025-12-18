@@ -14,6 +14,12 @@
 
 ---
 
+>[!WARNING]
+> This Framework is in early development stage, so it might contain a lots of bugs.
+
+>[!NOTE]
+> This project does not have documentation written yet :(
+
 ## Usage Example
 
 ### HTTP Client
