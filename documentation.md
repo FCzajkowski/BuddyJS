@@ -25,43 +25,39 @@ BuddyJS is an ultra-optimized JavaScript framework for building fast, modern web
 ## Project Structure
 ```
 BuddyJS/
-  App.js                # Main application entry point
-  CODE_OF_CONDUCT.md    # Contributor Covenant
-  CONTRIBUTING.md       # Contribution guidelines
-  documentation.md      # Full project documentation
-  index.html            # Main HTML entry point
-  LICENSE               # Project license
-  README.md             # Quick start and overview
-  server.js             # Node.js static server
-  TODO.md               # Project plans
+  App.js                <== Main application entry point
+  CODE_OF_CONDUCT.md    <== Contributor Covenant
+  CONTRIBUTING.md       <== Contribution guidelines
+  documentation.md      <== Full project documentation
+  index.html            <== Main HTML entry point
+  LICENSE               <== Project license
+  README.md             <== Quick start and overview
+  server.js             <== Node.js static server
+  TODO.md               <== Project plans
   public/
-    style.css           # Main stylesheet
+    style.css           <== Main stylesheet
   src/
-    component.js        # Component utilities
-    config.js           # Configuration constants
-    elements.js         # Element creation utilities
-    events.js           # Event handling
-    http.js             # HTTP client
-    importStyle.js      # Style loader
-    reactive.js         # Reactive state
-    render.js           # Rendering utilities
-    router.js           # SPA router
-    template.js         # HTML template parser
+    component.js        <== Component utilities
+    config.js           <== Configuration constants
+    elements.js         <== Element creation utilities
+    events.js           <== Event handling
+    http.js             <== HTTP client
+    importStyle.js      <== Style loader
+    reactive.js         <== Reactive state
+    render.js           <== Rendering utilities
+    router.js           <== SPA router
+    template.js         <== HTML template parser
   tests/
-    router.test.js      # Router unit tests
+    router.test.js      <== Router unit tests
 ```
 
 ---
 
 ## Quick Start
 1. Clone the repository:
-   ```bash
-git clone https://github.com/FCzajkowski/BuddyJS.git
-```
+   `git clone https://github.com/FCzajkowski/BuddyJS.git`
 2. Run the server:
-   ```bash
-node server.js
-```
+   `node server.js`
 3. Open your browser at [http://localhost:8080/](http://localhost:8080/)
 
 ---
