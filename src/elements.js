@@ -20,3 +20,7 @@ export function h(tag, props = {}, ...children) {
   }
   return el;
 }
+
+export function createElement(tag, props = {}, ...children) {
+  return h(tag, props, ...children);
+}

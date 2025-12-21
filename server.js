@@ -48,5 +48,7 @@ const server = http.createServer((req, res) => {
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
+  console.log(`##############################################`);
   console.log(`BuddyJS server running at http://localhost:${PORT}`);
+  console.log(`##############################################`);
 });

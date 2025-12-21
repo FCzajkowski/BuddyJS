@@ -1,114 +1,60 @@
 <div align="center">
   <h1>BuddyJS</h1>
-  <code style="padding:10px;">git clone https://github.com/FCzajkowski/BuddyJS</code>
+  <p>Buddy JS is an ultra-optimized JavaScript framework designed for building fast, and modern web applications.</p>
+  <code style="padding:10px;">git clone https://github.com/FCzajkowski/BuddyJS.git</code>
   <br>
   <br>
   
 </div>
 
+## 🚀 Quick Start
 
-## Quick Start
-1. Clone or download this repo
-2. Run `node server.js` (requires Node.js)
-3. Open [http://localhost:8080/#/counter](http://localhost:8080/#/counter) in your browser
+1. Clone or download this repo  
+2. Run `node server.js` (requires Node.js)  
+3. Open [http://localhost:8080/#/counter](http://localhost:8080/#/counter) in your browser  
+
+
+>[!IMPORTANT] 
+> BuddyJS is in an early development stage and may contain bugs.  
+> Contributions and feedback are welcome!
+
+
+## 🖥️ Example App
+
+Here’s a minimal example of an `App.js` file:
+
+````javascript
+import { mount } from './src/render.js';
+import { createElement, h } from './src/elements.js';
+
+importStyle('style.css');
+
+const Home = () => createElement('div', { class: 'buddyjs-home' },
+  createElement('p', {}, 'Hello from BuddyJS!'),
+);
+
+const root = document.getElementById('app');
+mount(Home, root);
+````
+
+
+## 📚 Documentation
+
+- Documentation is available in the `DOCS/<LANG>.md` files.
+- If your language is missing, you can submit a translation (preferably based on the English docs).
+
+
+## 🤝 Code of Conduct
+
+Please review the `CODE_OF_CONDUCT.md` before contributing to ensure a welcoming and respectful community.
+
+
+## 🧪 Tests
+
+- Automated tests are included in the `tests/` directory.
+- Run tests with:  
+  ```
+  npm test
+  ```
 
 ---
-
->[!WARNING]
-> This Framework is in early development stage, so it might contain a lots of bugs.
-
->[!NOTE]
-> This project does not have documentation written yet :(
-
-## Usage Example
-
-### HTTP Client
-```js
-import * as http from './src/http.js';
-http.get('/api/data').then(data => console.log(data));
-http.post('/api/data', {foo: 'bar'}).then(...);
-http.use(req => { req.headers['X-Token'] = 'token'; return req; });
-```
-
-### Reactive State
-```js
-import { reactive } from './src/reactive.js';
-const state = reactive({ count: 0 });
-state.count++;
-```
-
-### Component Example
-```js
-import { h } from './src/h.js';
-const Counter = () => h('div', {},
-	h('button', { onClick: () => state.count-- }, '-'),
-	h('span', {}, state.count),
-	h('button', { onClick: () => state.count++ }, '+')
-);
-```
-
-## API Reference
-
-### Routing
-- Hash-based: URLs like `/#/counter`
-- Define routes in `App.js`:
-	```js
-	const routes = {
-		'/': Home,
-		'/counter': Counter,
-		'/404': NotFound
-	};
-	```
-- Navigate: `router.navigate('/counter')`
-- 404 fallback: unknown routes go to `/404`
-
-### HTTP Client
-- `get(url, options)`
-- `post(url, body, options)`
-- `put(url, body, options)`
-- `del(url, options)`
-- `use(interceptorFn)`
-
-### State
-- `reactive(obj)` returns a reactive proxy
-- `state.subscribe(fn)` to rerender on change
-
-### CSS/SCSS Import
-- Use `importStyle('style.css')` in JS to load from `public/`
-
-## Config
-Edit `src/config.js` for API URLs and environment flags:
-```js
-export const API_URL = 'https://api.example.com';
-export const ENV = 'production';
-```
-
-## Testing
-- Add tests in the `tests/` folder
-- Example (see `tests/router.test.js`):
-```js
-import { createRouter } from '../src/router.js';
-// ...
-```
-
-## Security
-- Node.js server sets basic security headers (CSP, X-Frame-Options, etc.)
-
-## Project Structure
-```
-App.js
-index.html
-public/
-	style.css
-src/
-	h.js
-	reactive.js
-	render.js
-	events.js
-	router.js
-	http.js
-	config.js
-```
-
-## License
-Creative Commons
