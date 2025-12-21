@@ -11,7 +11,7 @@
 
 1. Clone or download this repo  
 2. Run `node server.js` (requires Node.js)  
-3. Open [http://localhost:8080/#/counter](http://localhost:8080/#/counter) in your browser  
+3. Open [http://localhost:8080/#/counter](http://localhost:8080/) in your browser  
 
 
 >[!IMPORTANT] 
