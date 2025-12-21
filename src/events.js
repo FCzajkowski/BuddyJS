@@ -1,27 +1,3 @@
-export function initEvents(root) {
-  const events = ['click', 'input', 'change'];
-  for (const event of events) {
-    root.addEventListener(event, (e) => {
-      let target = e.target;
-      while (target && target !== root) {
-        if (target._handlers && target._handlers[e.type]) {
-          target._handlers[e.type](e);
-          break;
-        }
-        target = target.parentElement;
-      }
-    });
-  }
-}
-
-// Minimal API to add/remove event handlers to elements
-export function addEvent(el, type, handler) {
-  el._handlers = el._handlers || {};
-  el._handlers[type] = handler;
-}
-
-export function removeEvent(el, type) {
-  if (el._handlers) {
-    delete el._handlers[type];
-  }
-}
+export function initEvents(r){for(const e of['click','input','change'])r.addEventListener(e,t=>{let a=t.target;while(a&&a!==r){if(a._handlers&&a._handlers[t.type]){a._handlers[t.type](t);break}a=a.parentElement}})}
+export function addEvent(e,t,h){(e._handlers=e._handlers||{})[t]=h}
+export function removeEvent(e,t){if(e._handlers)delete e._handlers[t]}

@@ -1,20 +1,2 @@
-export function mount(view, root, state) {
-  const render = () => {
-    root.innerHTML = '';
-    root.appendChild(view());
-  };
-  if (state) {
-    state.subscribe(render);
-  }
-  render();
-}
-
-// Minimal list rendering utility
-export function renderList(items, renderItem) {
-  const frag = document.createDocumentFragment();
-  items.forEach((item, i) => {
-    const el = renderItem(item, i);
-    if (el) frag.appendChild(el);
-  });
-  return frag;
-}
+export function mount(v,r,s){const f=()=>{r.innerHTML='';r.appendChild(v())};if(s)s.subscribe(f);f()}
+export function renderList(i,f){const g=document.createDocumentFragment();i.forEach((a,b)=>{const e=f(a,b);if(e)g.appendChild(e)});return g}

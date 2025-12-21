@@ -1,26 +1,2 @@
-export function h(tag, props = {}, ...children) {
-  const el = document.createElement(tag);
-  if (props) {
-    for (const [key, value] of Object.entries(props)) {
-      if (key.startsWith('on')) {
-        el._handlers = el._handlers || {};
-        el._handlers[key.slice(2).toLowerCase()] = value;
-      } else {
-        el.setAttribute(key, value);
-      }
-    }
-  }
-  for (const child of children) {
-    if (child === false || child === null || child === undefined) continue;
-    if (typeof child === 'string') {
-      el.appendChild(document.createTextNode(child));
-    } else {
-      el.appendChild(child);
-    }
-  }
-  return el;
-}
-
-export function createElement(tag, props = {}, ...children) {
-  return h(tag, props, ...children);
-}
+export function h(t,p={},...c){const e=document.createElement(t);if(p)for(const[k,v]of Object.entries(p))k.startsWith('on')?(e._handlers=e._handlers||{},e._handlers[k.slice(2).toLowerCase()]=v):e.setAttribute(k,v);for(const d of c)if(d!==!1&&d!=null)e.appendChild(typeof d=="string"?document.createTextNode(d):d);return e}
+export function createElement(t,p={},...c){return h(t,p,...c)}

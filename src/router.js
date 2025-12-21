@@ -1,13 +1,2 @@
 
-export function createRouter(routes, state) {
-  const setPath = () => {
-    const hash = window.location.hash.replace(/^#/, '') || '/';
-    state.path = routes[hash] ? hash : '/404';
-  };
-  const navigate = (path) => {
-    window.location.hash = path;
-  };
-  window.addEventListener('hashchange', setPath);
-  setPath();
-  return { navigate };
-}
+export function createRouter(r,s){const p=()=>{const h=window.location.hash.replace(/^#/,'')||'/';s.path=r[h]?h:'/404'};window.addEventListener('hashchange',p);p();return{navigate:x=>window.location.hash=x}}

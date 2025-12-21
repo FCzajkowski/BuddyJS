@@ -1,25 +1,5 @@
-//  ErrorBoundary component
-  export function ErrorBoundary({ fallback }, childFn) {
-    try {
-      return childFn();
-    } catch (err) {
-      if (typeof fallback === 'function') return fallback(err);
-      return fallback || null;
-    }
-  }
+// ErrorBoundary: minimal error handling for child functions
+export function ErrorBoundary({fallback},childFn){try{return childFn()}catch(e){return typeof fallback=="function"?fallback(e):fallback||null}}
 
-  // Dev Tool
-  export function withDevTools(component, name = 'Component') {
-    return function(props, ...children) {
-      console.debug(`[DevTools] Render: ${name}`, props);
-      return component(props, ...children);
-    };
-  }
-//
-
-// Component definition with props support
-export function defineComponent(componentFn) {
-  return function(props = {}, ...children) {
-    return componentFn(props, ...children);
-  };
-}
+// defineComponent: minimal wrapper for functional components
+export function defineComponent(fn){return(p={},...c)=>fn(p,...c)}
