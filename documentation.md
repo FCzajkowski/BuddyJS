@@ -6,7 +6,7 @@
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
 - [Core Concepts](#core-concepts)
-- [Main Files Overview](#main-files-overview)
+---
 - [Source Modules](#source-modules)
 - [Styling](#styling)
 - [Testing](#testing)
@@ -112,44 +112,220 @@ node server.js
 
 ---
 
+
 ## Source Modules
+
 ### src/render.js
-- `mount(view, root, state)`: Renders a view into a root element. Subscribes to state changes if provided.
-- `renderList(items, renderItem)`: Utility for rendering lists.
+```javascript
+export function mount(view, root, state) {
+  const render = () => {
+    root.innerHTML = '';
+    root.appendChild(view());
+  };
+  if (state) {
+    state.subscribe(render);
+  }
+  render();
+}
+
+// Minimal list rendering utility
+export function renderList(items, renderItem) {
+  const frag = document.createDocumentFragment();
+  items.forEach((item, i) => {
+    const el = renderItem(item, i);
+    if (el) frag.appendChild(el);
+  });
+  return frag;
+}
+```
 
 ### src/template.js
-- `template`: Tagged template for HTML parsing. Allows writing HTML in JS without JSX.
-- Uses DOMParser for robust parsing.
+```javascript
+import { h } from './elements.js';
+
+// Robust parser for HTML string to DOM element(s)
+function parseTag(str) {
+  str = str.trim();
+  const lines = str.split('\n');
+  if (lines.length > 1) {
+    const minIndent = Math.min(...lines.filter(l => l.trim()).map(l => l.match(/^\s*/)[0].length));
+    str = lines.map(l => l.slice(minIndent)).join('');
+  }
+  const parser = new window.DOMParser();
+  const doc = parser.parseFromString(str, 'text/html');
+  const body = doc.body;
+  if (body.children.length === 1) {
+    return body.firstElementChild;
+  } else if (body.children.length > 1) {
+    const frag = document.createDocumentFragment();
+    Array.from(body.children).forEach(child => frag.appendChild(child));
+    return frag;
+  } else {
+    return document.createTextNode(str);
+  }
+}
+
+export function template(strings, ...values) {
+  if (typeof strings === 'string') {
+    return parseTag(strings);
+  }
+  let html = '';
+  for (let i = 0; i < strings.length; i++) {
+    html += strings[i];
+    if (i < values.length) html += values[i];
+  }
+  return parseTag(html);
+}
+```
 
 ### src/component.js
-- `defineComponent`: Wraps a function to support props and children.
-- `ErrorBoundary`: Catches errors in child components.
-- `withDevTools`: Logs render info for debugging.
+```javascript
+export function ErrorBoundary({ fallback }, childFn) {
+  try {
+    return childFn();
+  } catch (err) {
+    if (typeof fallback === 'function') return fallback(err);
+    return fallback || null;
+  }
+}
+
+export function withDevTools(component, name = 'Component') {
+  return function(props, ...children) {
+    console.debug(`[DevTools] Render: ${name}`, props);
+    return component(props, ...children);
+  };
+}
+
+export function defineComponent(componentFn) {
+  return function(props = {}, ...children) {
+    return componentFn(props, ...children);
+  };
+}
+```
 
 ### src/router.js
-- `createRouter(routes, state)`: Hash-based SPA router. Updates state on navigation.
+```javascript
+export function createRouter(routes, state) {
+  const setPath = () => {
+    const hash = window.location.hash.replace(/^#/, '') || '/';
+    state.path = routes[hash] ? hash : '/404';
+  };
+  const navigate = (path) => {
+    window.location.hash = path;
+  };
+  window.addEventListener('hashchange', setPath);
+  setPath();
+  return { navigate };
+}
+```
 
 ### src/reactive.js
-- `reactive(initialState)`: Creates a reactive state object with subscribers.
-- `useState(initialValue)`: Simple state hook for functional components.
+```javascript
+export function reactive(initialState) {
+  const subscribers = [];
+  const proxy = new Proxy(initialState, {
+    set(target, prop, value) {
+      target[prop] = value;
+      if (prop !== 'text') {
+        subscribers.forEach(fn => fn());
+      }
+      return true;
+    }
+  });
+  proxy.subscribe = (fn) => subscribers.push(fn);
+  return proxy;
+}
+
+export function useState(initialValue) {
+  let value = initialValue;
+  const listeners = [];
+  function setState(newValue) {
+    value = newValue;
+    listeners.forEach(fn => fn(value));
+  }
+  function subscribe(fn) {
+    listeners.push(fn);
+  }
+  return [() => value, setState, subscribe];
+}
+```
 
 ### src/events.js
-- `initEvents(root)`: Sets up event listeners for click, input, change.
-- `addEvent`, `removeEvent`: Manage event handlers on elements.
+```javascript
+export function initEvents(root) {
+  const events = ['click', 'input', 'change'];
+  for (const event of events) {
+    root.addEventListener(event, (e) => {
+      let target = e.target;
+      while (target && target !== root) {
+        if (target._handlers && target._handlers[e.type]) {
+          target._handlers[e.type](e);
+          break;
+        }
+        target = target.parentElement;
+      }
+    });
+  }
+}
 
-### src/elements.js
-- `h(tag, props, ...children)`: Creates DOM elements with props and children.
-- `createElement`: Alias for `h`.
+export function addEvent(el, type, handler) {
+  el._handlers = el._handlers || {};
+  el._handlers[type] = handler;
+}
+
+export function removeEvent(el, type) {
+  if (el._handlers) {
+    delete el._handlers[type];
+  }
+}
+```
 
 ### src/http.js
-- HTTP client with `get`, `post`, `put`, `del` methods.
-- Supports interceptors for request modification.
+```javascript
+const interceptors = [];
+
+function applyInterceptors(req) {
+	return interceptors.reduce((r, fn) => fn(r) || r, req);
+}
+
+async function request(method, url, body, options = {}) {
+	let req = { method, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options };
+	if (body !== undefined) req.body = JSON.stringify(body);
+	req = applyInterceptors(req);
+	const res = await fetch(url, req);
+	const isJson = res.headers.get('content-type')?.includes('application/json');
+	if (!res.ok) {
+		const err = isJson ? await res.json() : await res.text();
+		throw { status: res.status, error: err };
+	}
+	return isJson ? res.json() : res.text();
+}
+
+export const get = (url, options) => request('GET', url, undefined, options);
+export const post = (url, body, options) => request('POST', url, body, options);
+export const put = (url, body, options) => request('PUT', url, body, options);
+export const del = (url, options) => request('DELETE', url, undefined, options);
+export const use = fn => interceptors.push(fn);
+```
 
 ### src/importStyle.js
-- Dynamically loads CSS/SCSS files from the public directory.
+```javascript
+function importStyle(file) {
+  if (!/\.(css|scss)$/.test(file)) throw new Error('Only .css/.scss supported');
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = '/public/' + file.replace(/^.*[\\\/]/, '');
+  document.head.appendChild(link);
+}
+
+export default importStyle;
+```
 
 ### src/config.js
-- Contains configuration constants (e.g., API_URL, ENV).
+```javascript
+export const API_URL = 'https://jsonplaceholder.typicode.com';
+export const ENV = 'development';
+```
 
 ---
 
@@ -187,28 +363,6 @@ node server.js
 
 ---
 
-## Contribution Guidelines
-- See `CONTRIBUTING.md` for details.
-- Fork, clone, and read the README before contributing.
-- Submit bug reports, feature requests, code, docs, or tests.
-- Follow coding standards and run tests before submitting changes.
-
----
-
-## Code of Conduct
-- See `CODE_OF_CONDUCT.md` for the full code of conduct.
-- Be respectful, inclusive, and constructive.
-- No harassment, trolling, or inappropriate behavior.
-
----
-
-## Future Plans
-- Write more documentation
-- Build a full website for BuddyJS
-- Add more examples and tests
-- Improve developer tooling
-
----
 
 ## Example Website
 
