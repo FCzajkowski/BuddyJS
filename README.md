@@ -11,13 +11,15 @@
 
 1. Clone or download this repo  
 2. Run `node server.js` (requires Node.js)  
-3. Open [http://localhost:8080/#/counter](http://localhost:8080/) in your browser  
+3. Open [http://localhost:8080/#/counter](http://localhost:8080/) in your browser
 
 
 >[!IMPORTANT] 
 > BuddyJS is in an early development stage and may contain bugs.  
 > Contributions and feedback are welcome!
 
+>[!TIP]
+> You can safely delete markdown files & LICENSE
 
 ## 🖥️ Example App
 
