@@ -1,4 +1,3 @@
----
 # BuddyJS Documentation
 
 ## Table of Contents
