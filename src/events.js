@@ -13,3 +13,15 @@ export function initEvents(root) {
     });
   }
 }
+
+// Minimal API to add/remove event handlers to elements
+export function addEvent(el, type, handler) {
+  el._handlers = el._handlers || {};
+  el._handlers[type] = handler;
+}
+
+export function removeEvent(el, type) {
+  if (el._handlers) {
+    delete el._handlers[type];
+  }
+}

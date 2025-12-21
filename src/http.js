@@ -1,4 +1,4 @@
-// Lightweight HTTP client for buddyJS
+// HTTP client for buddyJS
 // Usage:
 // import http from './src/http.js';
 // http.get('/api/data').then(data => ...)

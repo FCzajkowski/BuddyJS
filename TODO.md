@@ -1,3 +1,3 @@
-# Plan for future:
-- fix load when going on website
-- write devtools
+# Plans for the future:
+- Write Documentation
+- Write Website for this project :D

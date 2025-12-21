@@ -12,3 +12,17 @@ export function reactive(initialState) {
   proxy.subscribe = (fn) => subscribers.push(fn);
   return proxy;
 }
+
+// useState for functional components
+export function useState(initialValue) {
+  let value = initialValue;
+  const listeners = [];
+  function setState(newValue) {
+    value = newValue;
+    listeners.forEach(fn => fn(value));
+  }
+  function subscribe(fn) {
+    listeners.push(fn);
+  }
+  return [() => value, setState, subscribe];
+}
