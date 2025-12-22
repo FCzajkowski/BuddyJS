@@ -36,22 +36,26 @@ Here’s a minimal example of an `App.js` file:
 
 ````javascript
 import { mount } from './src/render.js';
-import { createElement, h } from './src/elements.js';
+import { template } from './src/template.js';
 
-importStyle('style.css');
-
-const Home = () => createElement('div', { class: 'buddyjs-home' },
-  createElement('p', {}, 'Hello from BuddyJS!'),
-);
+let $name = 'BuddyJS';
+function Home() {
+  return template(`
+    <div class="buddyjs-home">
+      <h1>${name}</h1>
+    </div>
+  `);
+}
 
 const root = document.getElementById('app');
 mount(Home, root);
+
 ````
 
 
 ## 📚 Documentation
 
-- Documentation is available in the `DOCS/<LANG>.md` files.
+- Documentation is available in the `documentation.md` file.
 - If your language is missing, you can submit a translation (preferably based on the English docs).
 
 
