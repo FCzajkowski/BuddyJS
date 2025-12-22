@@ -5,7 +5,7 @@
 import { mount } from './src/render.js';
 import { template } from './src/template.js';
 import importStyle from './src/importStyle.js';
-importStyle('style.css');
+importStyle('../style.css');
 
 function Home() {
   return template(`
