@@ -17,6 +17,9 @@
 | Angular 17 | ~70-100 KB | ~1.5s |
 | AngularJS (1.x) | ~60 KB | ~1.2s |
 
+>[!WARNING]
+> Framework is currently NOT supported, due to unwanted result.
+
 ## 🚀 Quick Start
 
 1. Clone or download this repo  
