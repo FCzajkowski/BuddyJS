@@ -17,6 +17,8 @@
 | Angular 17 | ~70-100 KB | ~1.5s |
 | AngularJS (1.x) | ~60 KB | ~1.2s |
 
+>[!TIP]
+> You can safely delete markdown files & LICENSE
 
 ## 🚀 Quick Start
 
@@ -29,8 +31,6 @@
 > Buddy.js is in an early development stage and may contain bugs.  
 > Contributions and feedback are welcome!
 
->[!TIP]
-> You can safely delete markdown files & LICENSE
 
 ## 🖥️ Example App
 
