@@ -4,9 +4,11 @@
   <code style="padding:10px;">git clone https://github.com/FCzajkowski/BuddyJS.git</code>
   <br>
   <br>
-  
+
+
 
 </div>
+
 
 | Framework | Minified + Gzipped Size | Initial Load Time |
 |-----------|------------------------|-------------------|
